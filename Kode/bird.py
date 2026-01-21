@@ -28,3 +28,5 @@ class Bird:
         if self.y - self.radius <= 0 or self.y + self.radius >= screen_height:
             return True
         return False
+        åfdsf
+        dfsdksd
