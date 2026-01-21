@@ -14,7 +14,7 @@ FPS = 60
 
 # Colors
 WHITE = (255, 255, 255)
-BLACK = (0, 0, 0)
+BLACK = (0, 0, 0) 
 GREEN = (34, 139, 34)
 YELLOW = (255, 255, 0)
 RED = (220, 20, 60)
