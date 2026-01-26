@@ -9,6 +9,7 @@ class Obstacle:
         self.width = 50
         self.gap_size = 150  # Space between top and bottom pipes
         self.speed = 5
+        self.passed = False  # Track if bird has passed this obstacle
         
         # Randomize gap position (leaving margin from top and bottom)
         margin = 75

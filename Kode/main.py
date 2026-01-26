@@ -14,7 +14,7 @@ FPS = 60
 
 # Colors
 WHITE = (255, 255, 255)
-BLACK = (0, 0, 0) 
+BLACK = (0, 0, 0)  
 GREEN = (34, 139, 34)
 YELLOW = (255, 255, 0)
 RED = (220, 20, 60)
@@ -56,6 +56,7 @@ obstacle_spawn_interval = 100  # Spawn new obstacle every 100 frames
 
 # Game states
 game_started = False
+score = 0
 running = True
 while running:
     for event in pygame.event.get():
@@ -69,6 +70,9 @@ while running:
             if event.key == pygame.K_SPACE:
                 if not game_started:
                     game_started = True
+                    bird.y = SCREEN_HEIGHT // 2  # Reset bird position
+                    bird.velocity = 0  # Reset bird velocity
+                    score = 0  # Reset score
                 else:
                     bird.flap()
     
@@ -81,6 +85,13 @@ while running:
         title_text = title_font.render("Flappy Bird", True, BLACK)
         title_rect = title_text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 4))
         screen.blit(title_text, title_rect)
+        
+        # Draw score if game was played
+        if score > 0:
+            score_font = pygame.font.Font(None, 48)
+            score_text = score_font.render(f"Score: {score}", True, BLACK)
+            score_rect = score_text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 - 50))
+            screen.blit(score_text, score_rect)
         
         start_button.draw(screen)
         
@@ -102,6 +113,10 @@ while running:
         # Update and remove off-screen obstacles
         for obstacle in obstacles[:]:
             obstacle.update()
+            # Check if bird passed this obstacle
+            if not obstacle.passed and obstacle.x + obstacle.width < bird.x:
+                obstacle.passed = True
+                score += 1
             if obstacle.is_off_screen():
                 obstacles.remove(obstacle)
         
@@ -110,12 +125,16 @@ while running:
             if obstacle.check_collision(bird):
                 print("Game Over! You hit an obstacle!")
                 game_started = False
+                bird.y = SCREEN_HEIGHT // 2  # Reset bird position
+                bird.velocity = 0  # Reset bird velocity
                 obstacles = []
         
         # Check if bird hit top or bottom
         if bird.is_off_screen(SCREEN_HEIGHT):
             print("Game Over! You hit the ground or ceiling!")
             game_started = False
+            bird.y = SCREEN_HEIGHT // 2  # Reset bird position
+            bird.velocity = 0  # Reset bird velocity
             obstacles = []
         
         # Draw obstacles
@@ -124,6 +143,12 @@ while running:
         
         # Draw bird
         bird.draw(screen)
+        
+        # Draw score
+        score_font = pygame.font.Font(None, 48)
+        score_text = score_font.render(str(score), True, BLACK)
+        score_rect = score_text.get_rect(center=(SCREEN_WIDTH // 2, 50))
+        screen.blit(score_text, score_rect)
     
     # Update display
     pygame.display.flip()
