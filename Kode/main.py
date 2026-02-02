@@ -1,5 +1,4 @@
 import pygame
-import random
 import sys
 from bird import Bird
 from obs import Obstacle
@@ -54,6 +53,7 @@ obstacles = []
 obstacle_spawn_timer = 0
 obstacle_spawn_interval = 100  # Spawn new obstacle every 100 frames
 
+
 # Game states
 game_started = False
 score = 0
@@ -92,6 +92,9 @@ while running:
             score_text = score_font.render(f"Score: {score}", True, BLACK)
             score_rect = score_text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 - 50))
             screen.blit(score_text, score_rect)
+
+    
+        
         
         start_button.draw(screen)
         

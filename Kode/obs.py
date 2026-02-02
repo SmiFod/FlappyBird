@@ -71,5 +71,5 @@ class Obstacle:
             # Check collision with bottom pipe
             if bird_bottom > self.gap_y + self.gap_size:
                 return True
-        
         return False
+    
